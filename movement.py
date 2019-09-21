@@ -5,20 +5,20 @@ def isBox(boxesPos, coords):
     return False
 
 def isMoveValid(board, goalsPos, coords, direction, nodeBoxPos):
-    if board(coords[0], coords[1]) == 'W':
+
+    if board.get(coords[0], coords[1]) == 'W':
         return False
-    
     if direction == 'U':
         if isBox(nodeBoxPos, coords):
             if isBox(nodeBoxPos, (coords[0] - 1, coords[1])):
                 return False
-            if board(coords[0]-1, coords[1]) == 'W': 
+            if board.get(coords[0]-1, coords[1]) == 'W': 
                 return False
-            if (board(coords[0]-2, coords[1]) == 'W' and board(coords[0]-1, coords[1]-1)) == 'W':
-                if not (goalsPos.__contains__([coords[0] - 1, coords[1]])):
+            if (board.get(coords[0]-2, coords[1]) == 'W' and board.get(coords[0]-1, coords[1]-1)) == 'W':
+                if (coords[0] - 1, coords[1]) not in goalsPos:
                     return False
-            if (board(coords[0]-2, coords[1]) == 'W' and board(coords[0]-1, coords[1]+1)) == 'W':        
-                if not (goalsPos.__contains__([coords[0] - 1, coords[1]])):
+            if (board.get(coords[0]-2, coords[1]) == 'W' and board.get(coords[0]-1, coords[1]+1)) == 'W':    
+                if (coords[0] - 1, coords[1]) not in goalsPos:
                     return False
         return True
     
@@ -26,13 +26,13 @@ def isMoveValid(board, goalsPos, coords, direction, nodeBoxPos):
         if isBox(nodeBoxPos, coords):
             if isBox(nodeBoxPos, (coords[0] + 1, coords[1])):
                 return False
-            if board(coords[0]+1, coords[1]) == 'W': 
+            if board.get(coords[0]+1, coords[1]) == 'W': 
                 return False
-            if (board(coords[0]+2, coords[1]) == 'W' and board(coords[0]+1, coords[1]-1)) == 'W':
-                if not (goalsPos.__contains__([coords[0] + 1, coords[1]])):
+            if (board.get(coords[0]+2, coords[1]) == 'W' and board.get(coords[0]+1, coords[1]-1)) == 'W':
+                if (coords[0] + 1, coords[1]) not in goalsPos:
                     return False
-            if (board(coords[0]+2, coords[1]) == 'W' and board(coords[0]+1, coords[1]+1)) == 'W':        
-                if not (goalsPos.__contains__([coords[0] + 1, coords[1]])):
+            if (board.get(coords[0]+2, coords[1]) == 'W' and board.get(coords[0]+1, coords[1]+1)) == 'W':
+                if (coords[0] + 1, coords[1]) not in goalsPos:        
                     return False
         return True
 
@@ -40,13 +40,13 @@ def isMoveValid(board, goalsPos, coords, direction, nodeBoxPos):
         if isBox(nodeBoxPos, coords):
             if isBox(nodeBoxPos, (coords[0], coords[1]-1)):
                 return False
-            if board(coords[0], coords[1]-1) == 'W': 
+            if board.get(coords[0], coords[1]-1) == 'W': 
                 return False
-            if (board(coords[0], coords[1]-2) == 'W' and board(coords[0]+1, coords[1]-1)) == 'W':
-                if not (goalsPos.__contains__([coords[0] + 1, coords[1]])):
+            if (board.get(coords[0], coords[1]-2) == 'W' and board.get(coords[0]+1, coords[1]-1)) == 'W':
+                if (coords[0], coords[1]-1) not in goalsPos:
                     return False
-            if (board(coords[0], coords[1]-2) == 'W' and board(coords[0]-1, coords[1]-1)) == 'W':        
-                if not (goalsPos.__contains__([coords[0], coords[1]]-1)):
+            if (board.get(coords[0], coords[1]-2) == 'W' and board.get(coords[0]-1, coords[1]-1)) == 'W':
+                if (coords[0], coords[1]-1) not in goalsPos:                  
                     return False
         return True
 
@@ -54,13 +54,13 @@ def isMoveValid(board, goalsPos, coords, direction, nodeBoxPos):
         if isBox(nodeBoxPos, coords):
             if isBox(nodeBoxPos, (coords[0], coords[1]+1)):
                 return False
-            if board(coords[0], coords[1]+1) == 'W': 
+            if board.get(coords[0], coords[1]+1) == 'W': 
                 return False
-            if (board(coords[0], coords[1]+2) == 'W' and board(coords[0]+1, coords[1]+1)) == 'W':
-                if not (goalsPos.__contains__([coords[0], coords[1]])):
+            if (board.get(coords[0], coords[1]+2) == 'W' and board.get(coords[0]+1, coords[1]+1)) == 'W':
+                if (coords[0], coords[1]+1) not in goalsPos:
                     return False
-            if (board(coords[0], coords[1]+2) == 'W' and board(coords[0]-1, coords[1]+1)) == 'W':        
-                if not (goalsPos.__contains__([coords[0], coords[1]+1])):
+            if (board.get(coords[0], coords[1]+2) == 'W' and board.get(coords[0]-1, coords[1]+1)) == 'W':
+                if (coords[0], coords[1]+1) not in goalsPos:        
                     return False
         return True
             
@@ -71,22 +71,22 @@ def moveBox(direction, coords, nodeBoxPos):
     for box in nodeBoxPos:
         if box[0] == coords[0] and box[1] == coords[1] and direction == 'U':
             nodeBoxPos.remove(box)
-            nodeBoxPos.append(coords[0]-1,coords[1])
+            nodeBoxPos.append([coords[0]-1,coords[1]])
             return nodeBoxPos
 
         if box[0] == coords[0] and box[1] == coords[1] and direction == 'D':
             nodeBoxPos.remove(box)
-            nodeBoxPos.append(coords[0]+1,coords[1])
+            nodeBoxPos.append([coords[0]+1,coords[1]])
             return nodeBoxPos
 
         if box[0] == coords[0] and box[1] == coords[1] and direction == 'L':
             nodeBoxPos.remove(box)
-            nodeBoxPos.append(coords[0],coords[1]-1)
+            nodeBoxPos.append([coords[0],coords[1]-1])
             return nodeBoxPos
 
         if box[0] == coords[0] and box[1] == coords[1] and direction == 'R':
             nodeBoxPos.remove(box)
-            nodeBoxPos.append(coords[0],coords[1]+1)
+            nodeBoxPos.append([coords[0],coords[1]+1])
             return nodeBoxPos
 
 

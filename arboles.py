@@ -1,4 +1,4 @@
-from search import DFS
+from search import DFS,BFS,IDFS
 
 #Board of the game
 board = {}
@@ -7,7 +7,7 @@ boxesPos = []
 #Player position
 player = []
 #Goals positions
-goalsPos = []
+goalsPos = {}
 
 def read_level(lvl):
 
@@ -31,7 +31,7 @@ def read_level(lvl):
                     #Fill the board map
                     if x[j] == "X":
                         board[(i, j)] = x[j]
-                        goalsPos.append((i, j))
+                        goalsPos[(i, j)] = x[j]
                         numGoals += 1
                         j += 1
                     else:
@@ -43,14 +43,14 @@ def read_level(lvl):
         #Not the end of the txt
         else:
             if x is not "\n" and boxFlg == False:
-                player.append([int(x[0]), int(x[2])])
+                player.append(int(x[0]))
+                player.append(int(x[2]))
                 boxFlg = True
             elif x is not "\n" and boxFlg == True:
                 boxesPos.append([int(x[0]), int(x[2])])
         #next line
         i += 1
-    print(player)
 
 read_level("nivel1.txt")
-print(player)
-print(DFS(board, player, goalsPos, boxesPos))
+
+print(IDFS(board,player,goalsPos,boxesPos))
