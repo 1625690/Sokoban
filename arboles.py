@@ -1,3 +1,4 @@
+import sys
 from search import DFS,BFS,IDFS
 
 #Board of the game
@@ -51,6 +52,8 @@ def read_level(lvl):
         #next line
         i += 1
 
-read_level("nivel1.txt")
+read_level(sys.argv[1])
 
+print(DFS(board,player,goalsPos,boxesPos))
+print(BFS(board,player,goalsPos,boxesPos))
 print(IDFS(board,player,goalsPos,boxesPos))
